@@ -1,45 +1,54 @@
 <?xml version="1.0"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="AiWA Oral History Plugin" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Ai West Africa (AiWA) Code Quality" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
 
-  <description>Coding standards for the AiWA Oral History Recorder WordPress plugin.</description>
+  <description>Coding standards for the Ai West Africa (AiWA).</description>
 
-  <!-- Paths to check -->
-  <file>.</file>
+    <!-- Scan all files in the plugin root, excluding specific directories -->
+    <file>.</file>
 
-  <!-- Exclude WP Core and common ignored paths -->
-  <exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
-  <exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
-  <exclude-pattern>/docroot/wp-*.php</exclude-pattern>
-  <exclude-pattern>/docroot/index.php</exclude-pattern>
-  <exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
-  <exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
-  <exclude-pattern>/vendor/*</exclude-pattern>
-  <exclude-pattern>/node_modules/*</exclude-pattern>
-  <exclude-pattern>*.min.js</exclude-pattern>
+    <!-- Exclude WP Core and common ignored paths -->
+    <exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
+    <exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
+    <exclude-pattern>/docroot/wp-*.php</exclude-pattern>
+    <exclude-pattern>/docroot/index.php</exclude-pattern>
+    <exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
+    <exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/tests/*</exclude-pattern> <!-- Or configure tests separately -->
+    <exclude-pattern>/build/*</exclude-pattern>
+    <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.min.css</exclude-pattern>
 
-  <!-- Base path normalization -->
-  <arg name="basepath" value="."/>
+    <!-- Minimum PHP version your plugin supports -->
+    <config name="testVersion" value="7.4-"/>
 
-  <!-- Run in parallel -->
-  <arg name="parallel" value="8"/>
+    <!-- Base path normalization -->
+    <arg name="basepath" value="."/>
+  
+    <!-- Run in parallel -->
+    <arg name="parallel" value="8"/>
+  
+    <!-- Include the WordPress ruleset, including Docs and Extra -->
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Docs"/>
+    <rule ref="WordPress-Extra">
+    <rule ref="Generic.Commenting.Todo"/>
+        <!-- Example: You can exclude specific sniffs if needed -->
+        <!-- <exclude name="WordPress.Files.FileName.InvalidClassFileName"/> -->
+    </rule>
 
-  <!-- Coding standards to include -->
-  <rule ref="WordPress-Extra"/>
-  <rule ref="WordPress-Docs"/>
-  <rule ref="Generic.Commenting.Todo"/>
+    <!-- Include PHPCompatibilityWP -->
+    <rule ref="PHPCompatibilityWP"/>
 
-  <!-- Optional: Enable if PHPCompatibilityWP is installed -->
-  <!--
-  <config name="testVersion" value="7.4-"/>
-  <rule ref="PHPCompatibilityWP">
-    <include-pattern>*\.php</include-pattern>
-  </rule>
-  -->
+    <!-- Set WordPress version -->
+    <config name="minimum_wp_version" value="7.4"/>
 
-  <!-- Set WordPress version -->
-  <config name="minimum_wp_version" value="6.0"/>
+    <!-- Configure PHPCS -->
+    <arg name="colors"/>
+    <arg value="ps"/> <!-- Show progress, sniff codes -->
 
-  <!-- Configure I18n text domain -->
+      <!-- Configure I18n text domain -->
   <rule ref="WordPress.WP.I18n">
     <properties>
       <property name="text_domain" type="array">
