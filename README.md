@@ -1,10 +1,11 @@
+![AiWA Logo](https://github.com/user-attachments/assets/9dccbc6e-b7a5-438f-9669-188811fc7d55)
+
 # AIWA Code Quality Standards
 
 This repository contains shared linting, formatting, and CI rules for all AiWA projects. It ensures consistent, clean, and accessible code across all AIWA tools and plugins.
 
 [![CodeQL](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/github-code-scanning/codeql)  [![codecov](https://img.shields.io/codecov/c/github/YAiWA-Ai-West-Africa/aiwa-code-quality)](https://codecov.io/gh/AiWA-Ai-West-Africa/aiwa-code-quality)
 
-[![AIWA Code Quality](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/code-quality.yml/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/code-quality.yml)  [![WordPress Plugin Code Quality](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/wp-code-quality.yml/badge.svg?branch=main)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/wp-code-quality.yml)
 [![Auto Assign](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/auto-assign.yml/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/auto-assign.yml)
 
 [![GitHub license](https://img.shields.io/github/license/AiWA-Ai-West-Africa/aiwa-code-quality.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/blob/main/LICENSE)
