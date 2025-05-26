@@ -1,9 +1,16 @@
 {
-  "name": "demo-repo",
-  "version": "0.2.0",
-  "description": "A sample package.json",
-  "dependencies": {
-    "@primer/css": "17.0.1"
+  "scripts": {
+    "lint:js": "eslint . --ext .js,.jsx",
+    "lint:css": "stylelint \"**/*.{css,scss}\"",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
   },
-  "license": "MIT"
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^14.0.0", // Or your preferred ESLint config
+    "@wordpress/stylelint-config": "^21.0.0", // Or your preferred Stylelint config
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "stylelint": "^15.0.0"
+    // Add specific eslint configs like eslint-config-airbnb-base if not using @wordpress/eslint-plugin
+  }
 }
