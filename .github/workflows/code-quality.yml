@@ -1,0 +1,51 @@
+name: AIWA Code Quality
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install JS/CSS/HTML linters
+        run: |
+          npm install --save-dev eslint stylelint htmlhint
+
+      - name: Lint JS
+        run: npx eslint . --ext .js --config .aiwa-code-quality/eslint/.eslintrc.json
+
+      - name: Lint CSS
+        run: npx stylelint "**/*.css" --config .aiwa-code-quality/stylelint/.stylelintrc.json
+
+      - name: Lint HTML
+        run: npx htmlhint "**/*.html" --config .aiwa-code-quality/htmlhint/.htmlhintrc
+
+  php-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install Composer PHPCS
+        run: |
+          composer global require "squizlabs/php_codesniffer=*"
+          composer global require wp-coding-standards/wpcs
+          ~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
+
+      - name: Run PHPCS
+        run: ~/.composer/vendor/bin/phpcs --standard=WordPress --extensions=php .
