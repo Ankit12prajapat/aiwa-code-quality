@@ -2,6 +2,9 @@
 
 This repository contains shared linting, formatting, and CI rules for all AiWA projects. It ensures consistent, clean, and accessible code across all AIWA tools and plugins.
 
+[![CodeQL](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/github-code-scanning/codeql)  [![AIWA Code Quality](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/code-quality.yml/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/code-quality.yml)  [![WordPress Plugin Code Quality](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/wp-code-quality.yml/badge.svg?branch=main)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/wp-code-quality.yml)
+[![Auto Assign](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/auto-assign.yml/badge.svg)](https://github.com/AiWA-Ai-West-Africa/aiwa-code-quality/actions/workflows/auto-assign.yml)
+
 ## Structure
 
 - `eslint/` - JavaScript linting rules
