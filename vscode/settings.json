@@ -1,0 +1,8 @@
+{
+  "eslint.options": {
+    "configFile": ".aiwa-code-quality/eslint/.eslintrc.json"
+  },
+  "stylelint.configFile": ".aiwa-code-quality/stylelint/.stylelintrc.json",
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true
+}

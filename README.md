@@ -1,31 +1,41 @@
-![AiWA Logo md](https://github.com/user-attachments/assets/956e5d68-122c-4d83-a59c-eb47e99c2025)
+# AIWA Code Quality Standards
 
-# Welcome to your organization's demo respository
-This code repository (or "repo") is designed to demonstrate the best GitHub has to offer with the least amount of noise.
+This repository contains shared linting, formatting, and CI rules for all AiWA projects. It ensures consistent, clean, and accessible code across all AIWA tools and plugins.
 
-The repo includes an `index.html` file (so it can render a web page), two GitHub Actions workflows, and a CSS stylesheet dependency.
+## Structure
 
+- `eslint/` - JavaScript linting rules
+- `stylelint/` - CSS linting rules (prefix: `aiwa_`)
+- `htmlhint/` - HTML semantic & accessibility rules
+- `php/` - WordPress PHP Coding Standards config via Composer
+- `vscode/` - Optional VS Code settings for instant linting
+- `.github/workflows/` - Reusable GitHub Actions for CI lint checks
 
----
+## Usage
 
+### 1. Add as a submodule (recommended)
+```bash
+git submodule add https://github.com/aiwa-org/aiwa-code-quality .aiwa-code-quality
+```
 
-## License & Access
+### 2. Reference config files
+- `.eslintrc.json`
+```json
+{ "extends": "./.aiwa-code-quality/eslint/.eslintrc.json" }
+```
+- `.stylelintrc.json`
+```json
+{ "extends": "./.aiwa-code-quality/stylelint/.stylelintrc.json" }
+```
+- `.htmlhintrc`
+```bash
+cp .aiwa-code-quality/htmlhint/.htmlhintrc .
+```
 
-This repository is governed by the [AiWA CONFIDENTIAL LICENSE](./LICENSE.md) and contains proprietary materials related to the Ai West Africa (AiWA) project, a collaboration between Cellular Vibrations and MaximillianGroup.
+### 3. Import GitHub Actions workflow (optional)
+```yaml
+curl -o .github/workflows/code-quality.yml https://raw.githubusercontent.com/aiwa-org/aiwa-code-quality/main/.github/workflows/code-quality.yml
+```
 
-Access to this repository is restricted. Use, reproduction, or distribution of any materials herein without explicit written consent from AiWA is strictly prohibited and may result in legal action.
-
-By accessing or interacting with this repository, you acknowledge and agree to the terms outlined in:
-
-- [LICENSE.md](./LICENSE.md) – Legal terms of access and enforcement jurisdiction  
-- [TERMS.md](./TERMS.md) – Project-specific ethical and operational conditions  
-- [REPOSITORY_GOVERNANCE_POLICY.md](./REPOSITORY_GOVERNANCE_POLICY.md) – Internal governance and contributor rules
-
----
-
-
-For questions, formal access requests, or legal inquiries, contact:  
-📧 legal@aiwestafrica.com | 📧 support@aiwestafrica.com
-
-
-
+## License
+© 2025 AiWA. Shared under LicenseRef-AiWA-Proprietary. For internal ecosystem use only.
