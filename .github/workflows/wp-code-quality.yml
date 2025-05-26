@@ -1,0 +1,98 @@
+name: wp code quality
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint-and-analyze:
+    name: Lint & Analyze
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['8.2'] # Adjust as needed, e.g., ['7.4', '8.0', '8.1', '8.2']
+        node-versions: ['18.x'] # Adjust as needed
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, gd, zip # Common WP extensions, gd & zip often for WPCS/PHPStan
+          tools: composer:v2 # Ensures composer is available
+        env:
+          COMPOSER_NO_INTERACTION: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-versions }}
+          cache: 'npm' # Or 'yarn' if you use Yarn
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        if: steps.composer-cache.outputs.dir != '' && hashFiles('composer.json') != ''
+        run: composer install --prefer-dist --no-progress --no-suggest
+        # Add --ignore-platform-reqs if you develop on a newer PHP than your plugin supports,
+        # but ensure your code is compatible.
+
+      - name: Validate Composer configuration
+        if: hashFiles('composer.json') != ''
+        run: composer validate --strict
+
+      - name: Install Node.js dependencies
+        if: hashFiles('package.json') != ''
+        run: npm ci # Or 'yarn install --frozen-lockfile'
+
+      - name: Run NPM Audit (Non-blocking)
+        if: hashFiles('package-lock.json') != '' # Or yarn.lock
+        run: npm audit || true # Allow failure as some advisories are hard to fix immediately
+
+      - name: PHP Lint (Syntax Check)
+        run: find . -name '*.php' -not -path "./vendor/*" -not -path "./node_modules/*" -exec php -l {} \; | (! grep -v "No syntax errors detected" )
+
+      - name: Run PHP_CodeSniffer (WPCS)
+        if: hashFiles('composer.json') != '' && hashFiles('phpcs.xml.dist') != ''
+        run: ./vendor/bin/phpcs --colors
+        # Assumes phpcs.xml.dist is configured in your project root
+
+      - name: Run PHPStan (Static Analysis)
+        if: hashFiles('composer.json') != '' && (hashFiles('phpstan.neon') != '' || hashFiles('phpstan.neon.dist') != '')
+        run: ./vendor/bin/phpstan analyse --memory-limit=1G --error-format=github
+        # Assumes phpstan.neon or phpstan.neon.dist is configured
+
+      - name: Run ESLint (JavaScript)
+        if: hashFiles('package.json') != '' && (hashFiles('.eslintrc.js') != '' || hashFiles('.eslintrc.json') != '' || hashFiles('.eslintrc.yaml') != '')
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --format=compact
+        # Adjust extensions as needed
+
+      - name: Run Stylelint (CSS/SCSS)
+        if: hashFiles('package.json') != '' && (hashFiles('.stylelintrc.js') != '' || hashFiles('.stylelintrc.json') != '' || hashFiles('.stylelintrc.yaml') != '')
+        run: npx stylelint "**/*.{css,scss}" --formatter=compact
+        # Adjust file patterns as needed
+
+      - name: Run Prettier Check (Formatting for JS/CSS/PHP etc.)
+        if: hashFiles('package.json') != '' && (hashFiles('.prettierrc.js') != '' || hashFiles('.prettierrc.json') != '' || hashFiles('.prettierrc.yaml') != '')
+        run: npx prettier --check .
+        # Assumes .prettierignore is configured to ignore vendor/node_modules etc.
