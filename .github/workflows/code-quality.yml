@@ -1,9 +1,18 @@
 name: AIWA Code Quality
-
+permissions:
+  contents: read    # To checkout the repository
+  actions: write    # For actions/cache to read/write caches
+  checks: write     # For PHPStan (and potentially other tools) to create check annotations
 on:
   push:
-    branches: ["**"]
+    branches:
+      - main
+      - develop
+      - 'feature/**'
   pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
   lint:
