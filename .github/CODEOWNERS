@@ -1,14 +1,14 @@
 # Require AiWA Core approval for all changes by default
-* @AiWA-Ai-West-Africa
+* @MaximillianGroup @Obafa
 # Linguistics team reviews language data and oral history content
-/data/ @AiWA-Ai-West-Africa
+/data/ @MaximillianGroup @Obafa
 
 # AI & Dev Team and SPARXSTAR both review core code, scripts, and GitHub Actions
-/src/ @AiWA-Ai-West-Africa @MaximillianGroup
-/scripts/ @AiWA-Ai-West-Africa  @MaximillianGroup
-/.github/workflows/ @AiWA-Ai-West-Africa
+/src/ @MaximillianGroup
+/scripts/  @MaximillianGroup
+/.github/workflows/ @MaximillianGroup
 
 # Advisors provide input on documentation and policy
-README.md @AiWA-Ai-West-Africa
-/docs/ @AiWA-Ai-West-Africa
+README.md @MaximillianGroup
+/docs/ @MaximillianGroup
 /policy/ @AiWA-Ai-West-Africa @Obafa
