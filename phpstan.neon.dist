@@ -1,31 +1,41 @@
 parameters:
-  level: 5
-  phpVersion: 80200
-
-  paths:
-    - ./includes
-    - ./src
-    - ./aiwa-oral-history-recording.php
-
-  autoload_files:
+    paths:
+        - . # Analyze all PHP files in the current directory
+    # Level 9 is the strictest. Start lower (e.g. 5) and gradually increase.
+    level: 5
+    bootstrapFiles:
+        # If you have a bootstrap file for tests, or need to define WP constants
+        # - tests/bootstrap.php
+    # Treat PHPDoc types as hints, not hard truth (more forgiving)
+    treatPhpDocTypesAsCertain: false
+    autoload_files:
     - ./vendor/autoload.php
-
-  # Treat PHPDoc types as hints, not hard truth (more forgiving)
-  treatPhpDocTypesAsCertain: false
-
-  # Exclude folders not relevant for analysis
-  excludePaths:
-    - tests/*
-    - vendor/*
-    - node_modules/*
-    - assets/*
-    - includes/lib/*
-
-  checkMissingIterableValueType: false
-  checkGenericClassInNonGenericObjectType: false
-
-  # You can relax rules here if needed
-  ignoreErrors:
+    scanDirectories:
+        - vendor/ # Scan vendor for stubs/definitions, but don't analyze its code quality
+    excludePaths:
+        - vendor/*
+        - node_modules/*
+        - tests/_data/* # Example for Codeception
+        - build/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+  
+    # You can relax rules here if needed
+    ignoreErrors:
     - '#Call to an undefined method (WP_|apply_filters|do_action|get_option|update_option|get_post).*#'
     - '#Access to an undefined property (WP_|$post|$wpdb).*#'
     - '#Function get_(option|post|term).* not found.#'
+    # WordPress stubs are usually handled by szepeviktor/phpstan-wordpress
+    # or phpstan/phpstan-wordpress
+    # If you are using szepeviktor/phpstan-wordpress, it might be auto-loaded
+    # via phpstan/extension-installer. Otherwise, include it:
+    # includes:
+    #    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    # or for phpstan/phpstan-wordpress
+    # includes:
+    #    - vendor/phpstan/phpstan-wordpress/extension.neon
+
+    # Optional: If you need to define constants for PHPStan
+    # constants:
+    #     WP_DEBUG: true
+    #     MY_PLUGIN_VERSION: '1.0.0'
